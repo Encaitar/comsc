@@ -29,8 +29,8 @@ public class Rectangle
 
   private boolean overlapsXaxis(Rectangle r1, Rectangle r2)
   {
-    Rectangle bigger = bigger(r1, r2);
-    Rectangle smaller = smaller(r1, r2);
+    Rectangle bigger = biggerX(r1, r2);
+    Rectangle smaller = smallerX(r1, r2);
 
     if(containedWithin(smaller.right, smaller.left, bigger.right, bigger.left))
     {
@@ -45,8 +45,8 @@ public class Rectangle
   
   private boolean overlapsYaxis(Rectangle r1, Rectangle r2)
   {
-    Rectangle bigger = bigger(r1, r2);
-    Rectangle smaller = smaller(r1, r2);
+    Rectangle bigger = biggerY(r1, r2);
+    Rectangle smaller = smallerY(r1, r2);
 
     if(containedWithin(smaller.top, smaller.bottom, bigger.top, bigger.bottom))
     {
@@ -59,14 +59,24 @@ public class Rectangle
     return false;
   }
 
-  private Rectangle bigger(Rectangle r1, Rectangle r2)
+  private Rectangle biggerX(Rectangle r1, Rectangle r2)
   {
     return (Math.abs(r1.right - r1.left) >= Math.abs(r2.right - r2.left)) ? r1 : r2;
   }
 
-  private Rectangle smaller(Rectangle r1, Rectangle r2)
+  private Rectangle smallerX(Rectangle r1, Rectangle r2)
   {
     return (Math.abs(r1.right - r1.left) >= Math.abs(r2.right - r2.left)) ? r2 : r1;
+  }
+
+  private Rectangle biggerY(Rectangle r1, Rectangle r2)
+  {
+    return (Math.abs(r1.top - r1.bottom) >= Math.abs(r2.top - r2.bottom)) ? r1 : r2;
+  }
+
+  private Rectangle smallerY(Rectangle r1, Rectangle r2)
+  {
+    return (Math.abs(r1.top - r1.bottom) >= Math.abs(r2.top - r2.bottom)) ? r2 : r1;
   }
 
   private boolean containedWithin(double firstBigger, double firstSmaller, double secondBigger, double secondSmaller)
