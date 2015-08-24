@@ -27,7 +27,6 @@ public class Rectangle
     }
   }
 
-  // can collapse these two check to a single check of is the first within, return true, else check the other one is in, return true, finally return false
   private boolean overlapsXaxis(Rectangle r2)
   {
     Rectangle bigger = bigger(this.left, this.right, r2.left, r2.right) ? this : r2;
