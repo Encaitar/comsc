@@ -121,14 +121,6 @@ public class BagOfHolding
     private int value;
     private int size;
     
-    public static Comparator<Item> byRatio() {
-      return new Comparator<Item>() {
-         public int compare(Item a, Item b) {
-           return Double.compare(a.value/a.size, b.value/b.size);
-         }
-      };
-   }
-
     public Item(int value, int size)
     {
       this.value = value;
