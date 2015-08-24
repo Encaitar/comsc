@@ -40,7 +40,7 @@ public class BagOfHolding
   {
     List<Item> solution = new ArrayList<Item>();
     
-    // starting at the bottom left of the table
+    // starting at the bottom right of the table
     int currentCapacityLimit = capacity;
     int numberOfItems = items.size() - 1;
 
