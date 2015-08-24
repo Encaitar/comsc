@@ -40,6 +40,7 @@ public class RectangleIntersectionTests {
 		assertTrue(r1.intersects(r2));
 	}
 	
+	// check this overlap
 	@Test
 	public void testXOverlap() {
 		Rectangle r1 = new Rectangle(2.0, 0.0, 0.0, 2.0);

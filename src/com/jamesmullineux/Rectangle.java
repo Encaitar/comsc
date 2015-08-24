@@ -17,72 +17,60 @@ public class Rectangle
 
   public boolean intersects(Rectangle r)
   {
-    if(overlapsXaxis(this, r))
+    if(this.overlapsXaxis(r) && this.overlapsYaxis(r))
     {
-      if(overlapsYaxis(this, r))
-      {
-        return true;
-      }
+      return true;
     }
-    return false;
+    else
+    {
+      return false;
+    }
   }
 
-  private boolean overlapsXaxis(Rectangle r1, Rectangle r2)
+  // can collapse these two check to a single check of is the first within, return true, else check the other one is in, return true, finally return false
+  private boolean overlapsXaxis(Rectangle r2)
   {
-    Rectangle bigger = biggerX(r1, r2);
-    Rectangle smaller = smallerX(r1, r2);
+    Rectangle bigger = bigger(this.left, this.right, r2.left, r2.right) ? this : r2;
+    Rectangle smaller = bigger(this.left, this.right, r2.left, r2.right) ? r2 : this;
 
-    if(containedWithin(smaller.right, smaller.left, bigger.right, bigger.left))
+    if(containedWithin(smaller.left, smaller.right, bigger.left, bigger.right))
     {
     	return true;
     }
-    if(overlapPartially(smaller.right, smaller.left, bigger.right, bigger.left))
+    if(overlapPartially(smaller.left, smaller.right, bigger.left, bigger.right))
     {
     	return true;
     }
+
     return false;
   }
   
-  private boolean overlapsYaxis(Rectangle r1, Rectangle r2)
+  private boolean overlapsYaxis(Rectangle r2)
   {
-    Rectangle bigger = biggerY(r1, r2);
-    Rectangle smaller = smallerY(r1, r2);
+    Rectangle bigger = bigger(this.bottom, this.top, r2.bottom, r2.top) ? this : r2;
+    Rectangle smaller = bigger(this.bottom, this.top, r2.bottom, r2.top) ? r2 : this;
 
-    if(containedWithin(smaller.top, smaller.bottom, bigger.top, bigger.bottom))
+    if(containedWithin(smaller.bottom, smaller.top, bigger.bottom, bigger.top))
     {
     	return true;
     }
-    if(overlapPartially(smaller.top, smaller.bottom, bigger.top, bigger.bottom))
+    if(overlapPartially(smaller.bottom, smaller.top, bigger.bottom, bigger.top))
     {
     	return true;
     }
+
     return false;
   }
 
-  private Rectangle biggerX(Rectangle r1, Rectangle r2)
+  private boolean bigger(double line1Start, double line1End, double line2Start, double line2End)
   {
-    return (Math.abs(r1.right - r1.left) >= Math.abs(r2.right - r2.left)) ? r1 : r2;
+    return (Math.abs(line1End - line1Start) >= Math.abs(line2End - line2Start)) ? true : false;
   }
 
-  private Rectangle smallerX(Rectangle r1, Rectangle r2)
+  private boolean containedWithin(double smallerStart, double smallerEnd, double biggerStart, double biggerEnd)
   {
-    return (Math.abs(r1.right - r1.left) >= Math.abs(r2.right - r2.left)) ? r2 : r1;
-  }
-
-  private Rectangle biggerY(Rectangle r1, Rectangle r2)
-  {
-    return (Math.abs(r1.top - r1.bottom) >= Math.abs(r2.top - r2.bottom)) ? r1 : r2;
-  }
-
-  private Rectangle smallerY(Rectangle r1, Rectangle r2)
-  {
-    return (Math.abs(r1.top - r1.bottom) >= Math.abs(r2.top - r2.bottom)) ? r2 : r1;
-  }
-
-  private boolean containedWithin(double firstBigger, double firstSmaller, double secondBigger, double secondSmaller)
-  {
-    if(firstBigger <= secondBigger && firstBigger >= secondSmaller &&
-       firstSmaller <= secondBigger && firstSmaller >= secondSmaller)
+    if(smallerEnd <= biggerEnd && smallerEnd >= biggerStart &&
+        smallerStart <= biggerEnd && smallerStart >= biggerStart)
     {
       return true;
     }
@@ -92,10 +80,10 @@ public class Rectangle
     }
   }
   
-  private boolean overlapPartially(double firstBigger, double firstSmaller, double secondBigger, double secondSmaller)
+  private boolean overlapPartially(double smallerStart, double smallerEnd, double biggerStart, double biggerEnd)
   {
-    if((firstBigger > secondSmaller && firstSmaller < secondSmaller) || 
-       (firstSmaller < secondBigger && firstBigger > secondBigger))
+    if((smallerEnd > biggerStart && smallerStart < biggerStart) || 
+       (smallerStart < biggerEnd && smallerEnd > biggerEnd))
     {
       return true;
     }
